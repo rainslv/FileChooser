@@ -6,8 +6,10 @@
 
 
 # 效果图
-
- <img src="https://github.com/supertaohaili/FileChooser/blob/master/S80110-113122.jpg" width="300"><img src="https://github.com/supertaohaili/FileChooser/blob/master/S80110-113111.jpg" width="300"><img src="https://github.com/supertaohaili/FileChooser/blob/master/S80110-113143.jpg" width="300">
+ ![1](https://github.com/rainslv/FileChooser/blob/master/S80110-113111.jpg)
+ ![2](https://github.com/supertaohaili/FileChooser/blob/master/S80110-113122.jpg)
+ ![3](https://github.com/supertaohaili/FileChooser/blob/master/S80110-113111.jpg)
+ ![4](https://github.com/supertaohaili/FileChooser/blob/master/S80110-113143.jpg)
 
 
 apk下载链接
