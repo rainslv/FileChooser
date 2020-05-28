@@ -44,6 +44,8 @@ public class FileAdapter extends CommonAdapter<FileInfo> {
                 || FileInfo.FILE_TYPE_JPG.equals(data.getFileType())
                 || FileInfo.FILE_TYPE_PNG.equals(data.getFileType())) {
             imageView.setImageResource(R.drawable.format_picture);
+        } else if (FileInfo.FILE_TYPE_DB.equals(data.getFileType())) {
+            imageView.setImageResource(R.drawable.format_other);
         } else if (FileInfo.FILE_TYPE_FOLDER.equals(data.getFileType())) {
             imageView.setImageResource(R.drawable.format_folder);
         } else {
@@ -156,6 +158,24 @@ public class FileAdapter extends CommonAdapter<FileInfo> {
                 });
                 fileChoose.setVisibility(View.GONE);
             }
+        } else if (chooseType.equals(FileInfo.FILE_TYPE_DB)) {
+
+            if (FileInfo.FILE_TYPE_DB.equals(data.getFileType())) {
+                fileChoose.setVisibility(View.VISIBLE);
+                fileChoose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        notifyData(position);
+                    }
+                });
+            } else {
+                fileChoose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
+                fileChoose.setVisibility(View.GONE);
+            }
         } else {
             if (chooseType.equals(data.getFileType())) {
                 fileChoose.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +229,10 @@ public class FileAdapter extends CommonAdapter<FileInfo> {
             }
         } else if (chooseType.equals(FileInfo.FILE_TYPE_PACKAGE)) {
             if (FileInfo.FILE_TYPE_ZIP.equals(data.getFileType()) || FileInfo.FILE_TYPE_RAR.equals(data.getFileType())) {
+                notifyData(position);
+            }
+        } else if (chooseType.equals(FileInfo.FILE_TYPE_DB)) {
+            if (FileInfo.FILE_TYPE_DB.equals(data.getFileType())) {
                 notifyData(position);
             }
         } else if (chooseType.equals(data.getFileType())) {

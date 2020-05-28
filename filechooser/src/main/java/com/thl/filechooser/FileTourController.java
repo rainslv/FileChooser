@@ -2,7 +2,6 @@ package com.thl.filechooser;
 
 import android.content.Context;
 import android.os.storage.StorageManager;
-import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -262,6 +261,8 @@ public class FileTourController {
                         fileInfo.setFileType(FileInfo.FILE_TYPE_JPG);
                     else if ("png".equals(getFileTypeName(childFile.getAbsolutePath())))
                         fileInfo.setFileType(FileInfo.FILE_TYPE_PNG);
+                    else if ("db".equals(getFileTypeName(childFile.getAbsolutePath())))
+                        fileInfo.setFileType(FileInfo.FILE_TYPE_DB);
                     else
                         fileInfo.setFileType(FileInfo.FILE_TYPE_FILE);
                 }
