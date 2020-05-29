@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -23,6 +22,7 @@ public class FileChooserActivity extends AppCompatActivity {
     private boolean showHideFile = true;
     public static FileChooser mFileChooser;
     private String mChoosenFilePath;
+    private boolean chooseCurrentPath = false;
 
     private FileTourController tourController;
     private FileAdapter adapter;
@@ -64,6 +64,7 @@ public class FileChooserActivity extends AppCompatActivity {
         int backIconRes = getIntent().getIntExtra("backIconRes", -1);
         String chooseType = getIntent().getStringExtra("chooseType");
         int themeColorRes = getIntent().getIntExtra("themeColorRes", -1);
+        this.chooseCurrentPath = getIntent().getBooleanExtra("chooseCurrentPath", false);
 
         tourController = new FileTourController(this, mChoosenFilePath);
         tourController.setShowFile(this.showFile);
@@ -71,7 +72,7 @@ public class FileChooserActivity extends AppCompatActivity {
         ImageView back = (ImageView) findViewById(R.id.back);
         TextView tvTitle = (TextView) findViewById(R.id.title);
         TextView tvRightText = (TextView) findViewById(R.id.rightText);
-        View bgView = (View) findViewById(R.id.bg_title);
+        View bgView = findViewById(R.id.bg_title);
         if (backIconRes != -1) {
             back.setImageResource(backIconRes);
         }
@@ -124,7 +125,7 @@ public class FileChooserActivity extends AppCompatActivity {
                     lastItemPositionMap.put(sign, lastItemPosition);
 
                 } else {
-                    adapter.notifyClick(data,position);
+                    adapter.notifyClick(data, position);
                 }
             }
         });
@@ -184,13 +185,23 @@ public class FileChooserActivity extends AppCompatActivity {
 
     public void clickRightText() {
         if (adapter != null && adapter.getSign() < 0) {
-            Toast.makeText(this, "请选择文件路径", Toast.LENGTH_SHORT).show();
+            if (!chooseCurrentPath)
+                Toast.makeText(this, "请选择文件路径", Toast.LENGTH_SHORT).show();
+            else {
+                if (tourController != null) {
+                    mChoosenFilePath = tourController.getCurrentFile().getAbsolutePath();
+                }
+                if (mFileChooser != null) {
+                    mFileChooser.finish(mChoosenFilePath);
+                }
+                finish();
+            }
             return;
         }
         if (tourController != null) {
             mChoosenFilePath = tourController.getCurrentFile().getAbsolutePath();
         }
-        if (this.mFileChooser != null) {
+        if (mFileChooser != null) {
             mFileChooser.finish(adapter.getChooseFilePath());
         }
         finish();
@@ -213,10 +224,10 @@ public class FileChooserActivity extends AppCompatActivity {
 
             int sign = tourController.getCurrentFolderList().size();
             Integer firstposition = firstItemPositionMap.get(sign);
-            int first = firstposition == null ? 0 : firstposition.intValue();
+            int first = firstposition == null ? 0 : firstposition;
 
             Integer lastItemPosition = lastItemPositionMap.get(sign);
-            int last = lastItemPosition == null ? 0 : lastItemPosition.intValue();
+            int last = lastItemPosition == null ? 0 : lastItemPosition;
 
             int rectification = dp2px(15); //纠偏
             if (fileRv.getLayoutManager() != null) {

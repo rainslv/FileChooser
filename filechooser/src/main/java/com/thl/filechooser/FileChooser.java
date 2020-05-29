@@ -18,6 +18,7 @@ public class FileChooser {
     private int backIconRes = -1;
     private boolean showFile = true;
     private boolean showHideFile = false;
+    private boolean chooseCurrentPath = false;//在没有勾选任何文件夹或文件的情况下，是否直接抓取当前目录
 
     public boolean isShowHideFile() {
         return showHideFile;
@@ -88,6 +89,7 @@ public class FileChooser {
         intent.putExtra("backIconRes", this.backIconRes);
         intent.putExtra("chooseType", this.chooseType);
         intent.putExtra("showFile", this.showFile);
+        intent.putExtra("chooseCurrentPath", this.chooseCurrentPath);
         this.mContext.startActivity(intent);
     }
 
@@ -103,6 +105,15 @@ public class FileChooser {
 
     public FileChooser setFileChoosenListener(FileChoosenListener fileChoosenListener) {
         this.fileChoosenListener = fileChoosenListener;
+        return this;
+    }
+
+    public boolean isChooseCurrentPath() {
+        return chooseCurrentPath;
+    }
+
+    public FileChooser setChooseCurrentPath(boolean chooseCurrentPath) {
+        this.chooseCurrentPath = chooseCurrentPath;
         return this;
     }
 
